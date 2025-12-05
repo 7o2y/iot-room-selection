@@ -4,7 +4,7 @@
 
 ## 🚀 Quick Links
 
-- **[📊 Project Tracker (Gantt Chart)](https://YOUR_USERNAME.github.io/iot-room-selection/)**
+- **[📊 Project Tracker (Gantt Chart)](https://7o2y.github.io/iot-room-selection/)**
 - [API Documentation (Swagger)](#) — *coming soon*
 - [Grafana Dashboard](#) — *coming soon*
 
