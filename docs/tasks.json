@@ -1,0 +1,45 @@
+{
+  "lastUpdated": "2024-12-05",
+  "tasks": [
+    { "id": 1, "name": "Research IoT Protocols", "person": "Person A", "epic": "Architecture", "start": 1, "duration": 0.5, "status": "todo" },
+    { "id": 2, "name": "Document Comm A, B, C, D", "person": "Person A", "epic": "Architecture", "start": 1.5, "duration": 0.5, "status": "todo" },
+    { "id": 3, "name": "Design MongoDB Schema", "person": "Person A", "epic": "Database", "start": 2, "duration": 0.5, "status": "todo" },
+    { "id": 4, "name": "Set up MongoDB", "person": "Person A", "epic": "Database", "start": 2.5, "duration": 0.5, "status": "todo" },
+    { "id": 5, "name": "Import Mock Sensor Data", "person": "Person A", "epic": "Database", "start": 3, "duration": 1, "status": "todo" },
+    { "id": 6, "name": "Set up FastAPI Project", "person": "Person A", "epic": "REST APIs", "start": 6, "duration": 0.25, "status": "todo" },
+    { "id": 7, "name": "Sensor Data Endpoints", "person": "Person A", "epic": "REST APIs", "start": 6.25, "duration": 0.5, "status": "todo" },
+    { "id": 8, "name": "Facilities & Calendar Endpoints", "person": "Person A", "epic": "REST APIs", "start": 6.75, "duration": 0.5, "status": "todo" },
+    { "id": 9, "name": "Decision/Rank Endpoint", "person": "Person A", "epic": "REST APIs", "start": 7.25, "duration": 0.5, "status": "todo" },
+    { "id": 10, "name": "Swagger Documentation", "person": "Person A", "epic": "REST APIs", "start": 7.75, "duration": 0.5, "status": "todo" },
+    { "id": 11, "name": "Integration Testing", "person": "Person A", "epic": "Integration", "start": 8.5, "duration": 0.5, "status": "todo" },
+    { "id": 12, "name": "Architecture Documentation", "person": "Person A", "epic": "Documentation", "start": 9, "duration": 0.5, "status": "todo" },
+
+    { "id": 13, "name": "Research EU Air Quality Standards", "person": "Person B", "epic": "Criteria", "start": 1, "duration": 0.5, "status": "todo" },
+    { "id": 14, "name": "Define Comfort Thresholds", "person": "Person B", "epic": "Criteria", "start": 1.5, "duration": 0.5, "status": "todo" },
+    { "id": 15, "name": "Create Criteria Hierarchy", "person": "Person B", "epic": "Criteria", "start": 2, "duration": 0.5, "status": "todo" },
+    { "id": 16, "name": "Document Mapping Functions", "person": "Person B", "epic": "Criteria", "start": 2.5, "duration": 0.5, "status": "todo" },
+    { "id": 17, "name": "Implement Saaty Pairwise Matrix", "person": "Person B", "epic": "AHP Algorithm", "start": 3, "duration": 0.5, "status": "todo" },
+    { "id": 18, "name": "Eigenvector Weight Calculation", "person": "Person B", "epic": "AHP Algorithm", "start": 3.5, "duration": 0.5, "status": "todo" },
+    { "id": 19, "name": "Consistency Ratio Check", "person": "Person B", "epic": "AHP Algorithm", "start": 6, "duration": 0.5, "status": "todo" },
+    { "id": 20, "name": "Data to Score Mapping", "person": "Person B", "epic": "AHP Algorithm", "start": 6.5, "duration": 0.5, "status": "todo" },
+    { "id": 21, "name": "Final Score Aggregation", "person": "Person B", "epic": "AHP Algorithm", "start": 7, "duration": 0.5, "status": "todo" },
+    { "id": 22, "name": "Unit Tests for AHP", "person": "Person B", "epic": "AHP Algorithm", "start": 7.5, "duration": 0.5, "status": "todo" },
+    { "id": 23, "name": "Bug Fixes & Refinements", "person": "Person B", "epic": "Integration", "start": 8.5, "duration": 0.5, "status": "todo" },
+    { "id": 24, "name": "Algorithm Documentation", "person": "Person B", "epic": "Documentation", "start": 9, "duration": 0.5, "status": "todo" },
+
+    { "id": 25, "name": "Set up React Project", "person": "Person C", "epic": "UI1 - End User", "start": 1, "duration": 0.5, "status": "todo" },
+    { "id": 26, "name": "Design UI Mockups", "person": "Person C", "epic": "UI1 - End User", "start": 1.5, "duration": 0.5, "status": "todo" },
+    { "id": 27, "name": "Saaty Scale Sliders", "person": "Person C", "epic": "UI1 - End User", "start": 2, "duration": 0.5, "status": "todo" },
+    { "id": 28, "name": "Profile Adjustment UI", "person": "Person C", "epic": "UI1 - End User", "start": 2.5, "duration": 0.5, "status": "todo" },
+    { "id": 29, "name": "Room Ranking Display", "person": "Person C", "epic": "UI1 - End User", "start": 6, "duration": 0.5, "status": "todo" },
+    { "id": 30, "name": "Integrate with FastAPI", "person": "Person C", "epic": "UI1 - End User", "start": 6.5, "duration": 0.5, "status": "todo" },
+    { "id": 31, "name": "Swagger Documentation Tab", "person": "Person C", "epic": "UI1 - End User", "start": 7, "duration": 0.25, "status": "todo" },
+    { "id": 32, "name": "Set up Grafana Dashboard", "person": "Person C", "epic": "UI2 - Admin", "start": 7.25, "duration": 0.5, "status": "todo" },
+    { "id": 33, "name": "Sensor Data Panels", "person": "Person C", "epic": "UI2 - Admin", "start": 7.75, "duration": 0.5, "status": "todo" },
+    { "id": 34, "name": "Facilities & Calendar Views", "person": "Person C", "epic": "UI2 - Admin", "start": 8.25, "duration": 0.5, "status": "todo" },
+    { "id": 35, "name": "Disconnection Alerts", "person": "Person C", "epic": "UI2 - Admin", "start": 8.75, "duration": 0.5, "status": "todo" },
+    { "id": 36, "name": "UI/UX Documentation", "person": "Person C", "epic": "Documentation", "start": 9.25, "duration": 0.5, "status": "todo" },
+
+    { "id": 37, "name": "Final Report & Submission", "person": "All", "epic": "Documentation", "start": 9.5, "duration": 0.5, "status": "todo" }
+  ]
+}
