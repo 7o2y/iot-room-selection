@@ -33,15 +33,16 @@
 iot-room-selection/
 ├── docs/                    # Project tracker & documentation
 │   ├── index.html          # Gantt chart (GitHub Pages)
-│   ├── tasks.json          # Task data (edit this!)
-│   └── assets/             # Images, diagrams
+│   ├── tasks.json          # Task data
+│   ├── assets/             # Images, diagrams
+│   └── research/           # Research documents (EU standards, etc.)
 ├── backend/                 # FastAPI application
 │   ├── app/
 │   │   ├── main.py
-│   │   ├── routers/
-│   │   ├── models/
-│   │   ├── services/
-│   │   └── ahp/            # AHP algorithm
+│   │   ├── routers/        # API Endpoints
+│   │   ├── models/         # Pydantic models
+│   │   ├── services/       # Business logic
+│   │   └── ahp/            # AHP algorithm (Person B)
 │   ├── requirements.txt
 │   └── Dockerfile
 ├── frontend/                # React application
@@ -51,6 +52,8 @@ iot-room-selection/
 ├── database/                # MongoDB setup
 │   ├── init/
 │   └── mock-data/          # JSON sensor data
+├── tests/                   # Unit & Integration tests
+│   └── unit/
 ├── docker-compose.yml
 └── README.md
 ```
