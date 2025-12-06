@@ -116,7 +116,7 @@
       "epic": "Criteria",
       "start": 1,
       "duration": 0.5,
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": 14,
@@ -125,7 +125,7 @@
       "epic": "Criteria",
       "start": 1.5,
       "duration": 0.5,
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": 15,
