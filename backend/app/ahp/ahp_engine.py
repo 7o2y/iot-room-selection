@@ -107,6 +107,20 @@ class AHPEngine:
         "Health": ["CO2", "AirQuality", "VOC"],
         "Usability": ["SeatingCapacity", "Equipment", "AVFacilities"],
     }
+
+    # Mapping from criterion id to RoomData attribute for raw values
+    RAW_VALUE_ATTR = {
+        "Temperature": "temperature",
+        "Lighting": "light",
+        "Noise": "noise",
+        "Humidity": "humidity",
+        "CO2": "co2",
+        "AirQuality": "air_quality",
+        "VOC": "voc",
+        "SeatingCapacity": "seating_capacity",
+        "Equipment": "computers",
+        "AVFacilities": "has_projector",
+    }
     
     def __init__(self):
         """Initialize the AHP engine with default weights."""
@@ -189,6 +203,9 @@ class AHPEngine:
             sub_comparisons: Nested dict by main criterion
                 Example: {"Comfort": {("Temperature", "Lighting"): 2}}
         """
+        # Reset consistency flag; recomputed matrices will update it
+        self._is_consistent = True
+
         if main_comparisons:
             for (crit_a, crit_b), value in main_comparisons.items():
                 self._main_matrix.set_comparison(crit_a, crit_b, value)
@@ -205,8 +222,9 @@ class AHPEngine:
                 self._sub_weights[main_crit] = self._calculate_weights(
                     self._sub_matrices[main_crit], main_crit
                 )
-        
+    
         self._calculate_global_weights()
+        self._is_consistent = all(cr < 0.1 for cr in self._consistency_ratios.values())
     
     def set_requirements(self, requirements: UserRequirements):
         """Set user's room requirements."""
@@ -220,9 +238,11 @@ class AHPEngine:
         """Load room data from dictionary format (e.g., from JSON)."""
         self._rooms = []
         for data in rooms_data:
+            facilities = data.get("facilities", {}) or {}
+
             room = RoomData(
-                room_id=data.get("id", data.get("name", "")),
-                room_name=data.get("name", ""),
+                room_id=data.get("id") or data.get("room_id") or data.get("name", ""),
+                room_name=data.get("name") or data.get("room_id") or data.get("id", ""),
                 temperature=data.get("temperature"),
                 co2=data.get("co2"),
                 humidity=data.get("humidity"),
@@ -230,10 +250,10 @@ class AHPEngine:
                 noise=data.get("noise"),
                 voc=data.get("voc"),
                 air_quality=data.get("air_quality"),
-                seating_capacity=data.get("seating_capacity", 0),
-                has_projector=data.get("has_projector", False),
-                computers=data.get("computers", 0),
-                has_robots=data.get("has_robots", False),
+                seating_capacity=data.get("seating_capacity", facilities.get("seating_capacity", 0)),
+                has_projector=bool(data.get("has_projector", facilities.get("videoprojector", False))),
+                computers=data.get("computers", facilities.get("computers", 0)),
+                has_robots=bool(data.get("has_robots", facilities.get("robots_for_training", 0))),
             )
             self._rooms.append(room)
     
@@ -342,10 +362,13 @@ class AHPEngine:
             
             # Add detailed criterion scores
             for crit_id, score in leaf_scores.items():
+                attr_name = self.RAW_VALUE_ATTR.get(crit_id)
+                raw_value = getattr(room, attr_name, 0) if attr_name else 0
+
                 room_score.criterion_scores.append(CriterionScore(
                     criterion_id=crit_id,
                     criterion_name=crit_id,
-                    raw_value=getattr(room, crit_id.lower(), 0) or 0,
+                    raw_value=raw_value,
                     normalized_score=score,
                     weight=self._global_weights.get(crit_id, 0),
                 ))

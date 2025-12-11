@@ -207,7 +207,7 @@ class TestSeatingCapacityMapping:
     def test_severely_undersize(self):
         """Test severely undersize returns low score."""
         score = map_seating_capacity(10, 30)
-        assert score < 0.5
+        assert score == 0.0
     
     def test_zero_required(self):
         """Test zero required returns 1.0 for any capacity."""
