@@ -147,6 +147,35 @@ class TestRoomDataLoading:
         assert len(engine._rooms) == 2
         assert engine._rooms[0].temperature == 22.0
 
+    def test_load_room_data_from_nested_facilities(self):
+        """Test loading rooms with nested facilities block (matches project JSON)."""
+        engine = AHPEngine()
+
+        rooms_data = [
+            {
+                "room_id": "Room_1",
+                "name": "Room 1",
+                "temperature": 21.5,
+                "co2": 550,
+                "facilities": {
+                    "videoprojector": True,
+                    "seating_capacity": 62,
+                    "computers": 20,
+                    "robots_for_training": 5,
+                },
+            }
+        ]
+
+        engine.load_room_data_from_dict(rooms_data)
+
+        room = engine._rooms[0]
+        assert room.room_id == "Room_1"
+        assert room.room_name == "Room 1"
+        assert room.has_projector is True
+        assert room.seating_capacity == 62
+        assert room.computers == 20
+        assert room.has_robots is True
+
 
 class TestRoomEvaluation:
     """Tests for evaluating rooms."""
@@ -177,6 +206,36 @@ class TestRoomEvaluation:
         assert len(result.rankings) == 1
         # This room has optimal values, should score high
         assert result.rankings[0].final_score > 0.8
+
+    def test_raw_values_are_carried_into_scores(self):
+        """Ensure raw sensor/facility values are preserved in criterion breakdown."""
+        engine = AHPEngine()
+
+        room = RoomData(
+            room_id="R1",
+            room_name="Room 1",
+            temperature=22.0,
+            co2=500,
+            humidity=50,
+            light=400,
+            noise=30,
+            voc=100,
+            air_quality=30,
+            seating_capacity=30,
+            has_projector=True,
+            computers=12,
+        )
+
+        engine.load_room_data([room])
+        result = engine.evaluate_rooms()
+
+        raw_values = {c.criterion_id: c.raw_value for c in result.rankings[0].criterion_scores}
+
+        assert raw_values["Lighting"] == 400
+        assert raw_values["Temperature"] == 22.0
+        assert raw_values["SeatingCapacity"] == 30
+        assert raw_values["Equipment"] == 12
+        assert raw_values["AVFacilities"] is True
     
     def test_room_ranking_order(self):
         """Test that rooms are ranked correctly."""

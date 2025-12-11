@@ -278,14 +278,17 @@ def map_seating_capacity(value: int, required: int) -> float:
     
     ratio = value / required
     
-    if 0.8 <= ratio <= 1.5:
+    if ratio < 0.5:
+        # Severely undersized room
+        return 0.0
+    if ratio < 0.8:
+        # Undersized but within 50-80%: scale linearly from 0.5 to ~1.0
+        return max(0.0, 0.5 + (ratio - 0.5) * (0.5 / 0.3))
+    if ratio <= 1.5:
+        # Within the preferred 80-150% window
         return 1.0
-    elif ratio < 0.8:
-        # Not enough seats
-        return max(0, ratio / 0.8 * 0.5 + 0.5 * (ratio / 0.8))
-    else:
-        # Too many seats (less efficient, but acceptable)
-        return max(0.5, 1.0 - (ratio - 1.5) * 0.1)
+    # Oversized: gently penalize efficiency but keep acceptable
+    return max(0.5, 1.0 - (ratio - 1.5) * 0.1)
 
 
 def map_equipment(has_computers: bool, computer_count: int = 0, required: int = 0) -> float:
