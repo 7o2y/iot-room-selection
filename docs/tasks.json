@@ -134,7 +134,7 @@
       "epic": "Criteria",
       "start": 2,
       "duration": 0.5,
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": 16,
@@ -143,7 +143,7 @@
       "epic": "Criteria",
       "start": 2.5,
       "duration": 0.5,
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": 17,
@@ -152,7 +152,7 @@
       "epic": "AHP Algorithm",
       "start": 3,
       "duration": 0.5,
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": 18,
@@ -161,7 +161,7 @@
       "epic": "AHP Algorithm",
       "start": 3.5,
       "duration": 0.5,
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": 19,
@@ -170,7 +170,7 @@
       "epic": "AHP Algorithm",
       "start": 6,
       "duration": 0.5,
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": 20,
@@ -179,7 +179,7 @@
       "epic": "AHP Algorithm",
       "start": 6.5,
       "duration": 0.5,
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": 21,
@@ -188,7 +188,7 @@
       "epic": "AHP Algorithm",
       "start": 7,
       "duration": 0.5,
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": 22,
@@ -197,7 +197,7 @@
       "epic": "AHP Algorithm",
       "start": 7.5,
       "duration": 0.5,
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": 23,
@@ -206,7 +206,7 @@
       "epic": "Integration",
       "start": 8.5,
       "duration": 0.5,
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": 24,
@@ -215,7 +215,7 @@
       "epic": "Documentation",
       "start": 9,
       "duration": 0.5,
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": 25,

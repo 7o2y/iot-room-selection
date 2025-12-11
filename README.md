@@ -42,7 +42,7 @@ iot-room-selection/
 │   │   ├── routers/        # API Endpoints
 │   │   ├── models/         # Pydantic models
 │   │   ├── services/       # Business logic
-│   │   └── ahp/            # AHP algorithm (Person B)
+│   │   └── ahp/            # AHP algorithm
 │   ├── requirements.txt
 │   └── Dockerfile
 ├── frontend/                # React application
