@@ -5,25 +5,24 @@
 ## Hierarchy Structure
 
 ```
-                        ┌─────────────────────┐
-                        │   SELECT BEST ROOM  │ ← Goal
-                        └──────────┬──────────┘
-                                   │
-         ┌─────────────────────────┼─────────────────────────┐
-         │                         │                         │
-    ┌────▼────┐              ┌─────▼────┐              ┌────▼─────┐
-    │ COMFORT │              │  HEALTH  │              │ USABILITY│ ← Main Criteria
-    │   40%   │              │   35%    │              │   25%    │
-    └────┬────┘              └────┬─────┘              └────┬─────┘
-         │                        │                         │
-    ┌────┼────┐              ┌────┼────┐              ┌─────┼─────┐
-    │    │    │              │    │    │              │     │     │
-  ┌─▼┐ ┌─▼┐ ┌─▼┐          ┌──▼┐ ┌─▼─┐ ┌▼─┐        ┌──▼──┐ ┌▼──┐ ┌▼──┐
-  │T │ │L │ │N │ │H│       │CO2│ │AQ│ │VOC│       │Seats│ │Eq│ │A/V│ ← Sub-Criteria
-  └──┘ └──┘ └──┘ └─┘       └───┘ └──┘ └───┘       └─────┘ └──┘ └───┘
+Select Best Room (Goal)
+├─ Comfort (40%)
+│  ├─ Temperature
+│  ├─ Lighting
+│  ├─ Noise
+│  └─ Humidity
+├─ Health (35%)
+│  ├─ CO2
+│  ├─ Air Quality (AQI)
+│  └─ VOC
+└─ Usability (25%)
+   ├─ Seating Capacity
+   ├─ Equipment (computers)
+   └─ A/V Facilities (projector)
 ```
 
-**Legend:** T=Temperature, L=Lighting, N=Noise, H=Humidity, AQ=Air Quality, Eq=Equipment
+Each leaf node maps directly to the inputs expected by `AHPEngine.SUB_CRITERIA`, ensuring
+the documentation stays in sync with the FastAPI backend module.
 
 ---
 
