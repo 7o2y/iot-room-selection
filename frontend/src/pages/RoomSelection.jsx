@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import PreferenceMatrix from '../components/PreferenceMatrix'
+import ProfileAdjuster from '../components/ProfileAdjuster'
 
 function RoomSelection() {
   const [preferences, setPreferences] = useState({
@@ -8,9 +9,16 @@ function RoomSelection() {
     consistencyRatio: 0,
   })
 
+  const [profile, setProfile] = useState({})
+
   const handlePreferencesChange = (newPreferences) => {
     setPreferences(newPreferences)
     console.log('Preferences updated:', newPreferences)
+  }
+
+  const handleProfileChange = (newProfile) => {
+    setProfile(newProfile)
+    console.log('Profile updated:', newProfile)
   }
 
   return (
@@ -25,17 +33,9 @@ function RoomSelection() {
           <PreferenceMatrix onPreferencesChange={handlePreferencesChange} />
         </div>
 
-        {/* Right Panel: Profile Adjustment (Task 28) */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
-            Environmental Thresholds
-          </h2>
-          <p className="text-sm text-gray-600 mb-6">
-            Profile adjustment UI will be added in Task 28
-          </p>
-          <div className="bg-gray-50 rounded-lg p-8 text-center text-gray-500">
-            <p>Coming soon...</p>
-          </div>
+        {/* Right Panel: Profile Adjustment */}
+        <div>
+          <ProfileAdjuster onProfileChange={handleProfileChange} />
         </div>
       </div>
 
