@@ -12,9 +12,9 @@
 
 | Role | Member | Responsibilities |
 |------|--------|------------------|
-| Backend/Database | Person A | FastAPI, MongoDB, REST APIs, Swagger |
-| Algorithm/Data | Person B | AHP implementation, EU standards research |
-| Frontend/UI | Person C | React UI, Grafana dashboard |
+| Backend/Database | Anthony | FastAPI, MongoDB, REST APIs, Swagger |
+| Algorithm/Data | Fede | AHP implementation, EU standards research |
+| Frontend/UI | Filip | React UI, Grafana dashboard |
 
 ## 🛠 Tech Stack
 
@@ -23,7 +23,7 @@
 | Protocols | I2C/Analog + MQTT + HTTP REST |
 | Database | MongoDB |
 | Backend | Python + FastAPI |
-| Frontend | React |
+| Frontend | React + Vite |
 | Monitoring | Grafana |
 | Auth | JWT *(bonus)* |
 
