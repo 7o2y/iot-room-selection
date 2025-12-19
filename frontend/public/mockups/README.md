@@ -1,6 +1,6 @@
 # UI Mockups - Design Documentation
 
-**Created:** December 2024
+**Created:** December 2025
 **Designer:** Filip
 **Project:** IoT Room Selection Decision Support System
 
@@ -304,14 +304,3 @@ To view the mockups:
 - Self-contained files with embedded styles
 - No external dependencies (fonts, libraries)
 
-## Feedback & Iteration
-
-This is version 1.0 of the mockups. Feedback welcome for:
-- Color scheme adjustments
-- Layout improvements
-- Additional features
-- Accessibility enhancements
-
----
-
-**Next Steps:** Implement these designs as React components in Tasks 27-31 using Vite + Tailwind CSS.
