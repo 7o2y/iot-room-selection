@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import RoomSelection from './pages/RoomSelection'
+import SwaggerDocs from './pages/SwaggerDocs'
 
 function App() {
   return (
@@ -29,6 +30,12 @@ function App() {
                   >
                     Room Selection
                   </Link>
+                  <Link
+                    to="/api-docs"
+                    className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                  >
+                    API Docs
+                  </Link>
                 </div>
               </div>
             </div>
@@ -40,6 +47,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/select-room" element={<RoomSelection />} />
+            <Route path="/api-docs" element={<SwaggerDocs />} />
           </Routes>
         </main>
       </div>
