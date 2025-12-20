@@ -2,7 +2,7 @@ import { useState } from 'react'
 import PreferenceMatrix from '../components/PreferenceMatrix'
 import ProfileAdjuster from '../components/ProfileAdjuster'
 import RoomRanking from '../components/RoomRanking'
-import apiClient from '../api/apiClient'
+import useRoomRanking from '../hooks/useRoomRanking'
 import { Sparkles, AlertCircle } from 'lucide-react'
 
 function RoomSelection() {
@@ -13,9 +13,9 @@ function RoomSelection() {
   })
 
   const [profile, setProfile] = useState({})
-  const [rankings, setRankings] = useState(null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
+
+  // Use custom hook for room ranking
+  const { rankings, loading, error, evaluateRooms, clearError } = useRoomRanking()
 
   const handlePreferencesChange = (newPreferences) => {
     setPreferences(newPreferences)
@@ -28,24 +28,17 @@ function RoomSelection() {
   }
 
   const handleEvaluateRooms = async () => {
-    setLoading(true)
-    setError(null)
-
     try {
-      // Call API to evaluate rooms
-      const result = await apiClient.evaluateRooms({
+      // Call API to evaluate rooms using the hook
+      await evaluateRooms({
         saaty_preferences: preferences.comparisons,
         weights: preferences.weights,
+        consistencyRatio: preferences.consistencyRatio,
         profile_adjustments: profile,
       })
-
-      setRankings(result)
-      console.log('Rankings received:', result)
     } catch (err) {
+      // Error is already handled by the hook
       console.error('Error evaluating rooms:', err)
-      setError('Failed to evaluate rooms. Please try again.')
-    } finally {
-      setLoading(false)
     }
   }
 
@@ -81,9 +74,17 @@ function RoomSelection() {
 
       {/* Error Message */}
       {error && (
-        <div className="mt-6 bg-red-50 border border-red-200 rounded-lg p-4 flex items-center gap-2 text-red-700">
-          <AlertCircle className="w-5 h-5 flex-shrink-0" />
-          <p>{error}</p>
+        <div className="mt-6 bg-red-50 border border-red-200 rounded-lg p-4 flex items-center justify-between text-red-700">
+          <div className="flex items-center gap-2">
+            <AlertCircle className="w-5 h-5 flex-shrink-0" />
+            <p>{error}</p>
+          </div>
+          <button
+            onClick={clearError}
+            className="text-red-700 hover:text-red-900 font-medium text-sm"
+          >
+            Dismiss
+          </button>
         </div>
       )}
 

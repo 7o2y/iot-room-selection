@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, Fragment } from 'react'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 import ScoreBreakdown from './ScoreBreakdown'
 
@@ -116,9 +116,9 @@ function RoomRanking({ rankings = [], consistencyRatio = 0 }) {
                 const humidityStatus = getStatusBadge(room.humidity, 40, 60)
 
                 return (
-                  <>
+                  <Fragment key={room.room_id}>
                     {/* Main Row */}
-                    <tr key={room.room_id} className="border-b border-gray-200 hover:bg-gray-50 transition">
+                    <tr className="border-b border-gray-200 hover:bg-gray-50 transition">
                       {/* Rank Badge */}
                       <td className="px-4 py-4 text-center">
                         <span
@@ -220,13 +220,13 @@ function RoomRanking({ rankings = [], consistencyRatio = 0 }) {
 
                     {/* Expandable Breakdown */}
                     {isExpanded && (
-                      <tr key={`${room.room_id}-breakdown`} className="bg-gray-50">
+                      <tr className="bg-gray-50">
                         <td colSpan={8} className="p-0">
                           <ScoreBreakdown room={room} />
                         </td>
                       </tr>
                     )}
-                  </>
+                  </Fragment>
                 )
               })}
             </tbody>

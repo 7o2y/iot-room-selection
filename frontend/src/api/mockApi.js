@@ -4,45 +4,143 @@
 // Import room data from project data
 // Note: In production, this will be fetched from the backend
 import roomsData from '../../../docs/project info&data/Project_sensor_data/aggregated_rooms.json'
+import { EU_STANDARDS } from '../constants/euStandards'
 
-// Simple scoring function (simplified version of AHP)
-const scoreRoom = (room, userProfile = {}) => {
-  let score = 0
-  let count = 0
+/**
+ * Score a single criterion based on user's threshold
+ * Returns 1.0 if within optimal range, scales down as it gets further away
+ */
+const scoreCriterion = (value, userMin, userMax, absoluteMin, absoluteMax) => {
+  // If no value, return 0
+  if (value === undefined || value === null) return 0
 
-  // Temperature scoring (optimal: 20-24°C)
-  if (room.temperature) {
-    const tempScore = room.temperature >= 20 && room.temperature <= 24 ? 1 :
-                     room.temperature >= 18 && room.temperature <= 26 ? 0.7 : 0.3
-    score += tempScore
-    count++
+  // If within user's optimal range, perfect score
+  if (value >= userMin && value <= userMax) return 1.0
+
+  // Calculate how far outside the optimal range
+  // The further away, the lower the score
+  if (value < userMin) {
+    const range = userMin - absoluteMin
+    const distance = userMin - value
+    return Math.max(0, 1 - (distance / range) * 0.7) // Max penalty 0.7
+  } else {
+    const range = absoluteMax - userMax
+    const distance = value - userMax
+    return Math.max(0, 1 - (distance / range) * 0.7) // Max penalty 0.7
+  }
+}
+
+/**
+ * Calculate comfort score based on environmental factors
+ */
+const calculateComfortScore = (room, profile) => {
+  const tempProfile = profile.temperature || { min: 20, max: 24 }
+  const humidProfile = profile.humidity || { min: 40, max: 60 }
+  const noiseProfile = profile.noise || { min: 0, max: 35 }
+  const lightProfile = profile.light || { min: 300, max: 500 }
+
+  const tempScore = scoreCriterion(
+    room.temperature,
+    tempProfile.min,
+    tempProfile.max,
+    EU_STANDARDS.temperature.min,
+    EU_STANDARDS.temperature.max
+  )
+
+  const humidScore = scoreCriterion(
+    room.humidity,
+    humidProfile.min,
+    humidProfile.max,
+    EU_STANDARDS.humidity.min,
+    EU_STANDARDS.humidity.max
+  )
+
+  const noiseScore = room.noise
+    ? scoreCriterion(
+        room.noise,
+        noiseProfile.min,
+        noiseProfile.max,
+        EU_STANDARDS.noise.min,
+        EU_STANDARDS.noise.max
+      )
+    : 0.8 // Default if no noise data
+
+  const lightScore = room.light
+    ? scoreCriterion(
+        room.light,
+        lightProfile.min,
+        lightProfile.max,
+        EU_STANDARDS.light.min,
+        EU_STANDARDS.light.max
+      )
+    : 0.8 // Default if no light data
+
+  // Weight the comfort factors
+  return tempScore * 0.35 + humidScore * 0.25 + noiseScore * 0.2 + lightScore * 0.2
+}
+
+/**
+ * Calculate health score based on air quality factors
+ */
+const calculateHealthScore = (room, profile) => {
+  const co2Profile = profile.co2 || { min: 0, max: 600 }
+  const vocProfile = profile.voc || { min: 0, max: 200 }
+
+  const co2Score = scoreCriterion(
+    room.co2,
+    co2Profile.min,
+    co2Profile.max,
+    EU_STANDARDS.co2.min,
+    EU_STANDARDS.co2.max
+  )
+
+  const aqScore = room.air_quality
+    ? scoreCriterion(
+        room.air_quality,
+        0,
+        50,
+        EU_STANDARDS.airQuality.min,
+        EU_STANDARDS.airQuality.max
+      )
+    : 0.8
+
+  const vocScore = room.voc
+    ? scoreCriterion(
+        room.voc,
+        vocProfile.min,
+        vocProfile.max,
+        EU_STANDARDS.voc.min,
+        EU_STANDARDS.voc.max
+      )
+    : 0.8
+
+  // Weight the health factors (CO2 is most important)
+  return co2Score * 0.5 + aqScore * 0.3 + vocScore * 0.2
+}
+
+/**
+ * Calculate usability score based on facilities
+ */
+const calculateUsabilityScore = (room) => {
+  let score = 0.5 // Base score
+
+  // Projector adds value
+  if (room.has_projector) score += 0.2
+
+  // Computers add value
+  if (room.computers > 0) {
+    score += Math.min(0.3, room.computers / 100) // More computers = better, up to 0.3
   }
 
-  // CO2 scoring (optimal: < 600 ppm)
-  if (room.co2) {
-    const co2Score = room.co2 < 600 ? 1 :
-                    room.co2 < 1000 ? 0.6 : 0.2
-    score += co2Score
-    count++
+  // Robots add value
+  if (room.has_robots) score += 0.15
+
+  // Seating capacity
+  if (room.seating_capacity >= 30) {
+    score += 0.1 // Large room bonus
   }
 
-  // Humidity scoring (optimal: 40-60%)
-  if (room.humidity) {
-    const humidityScore = room.humidity >= 40 && room.humidity <= 60 ? 1 :
-                         room.humidity >= 30 && room.humidity <= 70 ? 0.7 : 0.3
-    score += humidityScore
-    count++
-  }
-
-  // Air quality scoring (optimal: < 50 AQI)
-  if (room.air_quality) {
-    const aqScore = room.air_quality < 50 ? 1 :
-                   room.air_quality < 100 ? 0.6 : 0.2
-    score += aqScore
-    count++
-  }
-
-  return count > 0 ? score / count : 0
+  return Math.min(1.0, score) // Cap at 1.0
 }
 
 export const mockApi = {
@@ -59,16 +157,41 @@ export const mockApi = {
   evaluateRooms: async (preferences = {}) => {
     return new Promise((resolve) => {
       setTimeout(() => {
-        // Score each room
-        const scoredRooms = roomsData.map((room) => ({
-          ...room,
-          final_score: scoreRoom(room, preferences.profile_adjustments),
-          comfort_score: scoreRoom(room) * 0.9 + Math.random() * 0.1,
-          health_score: scoreRoom(room) * 0.95 + Math.random() * 0.05,
-          usability_score: room.has_projector ? 0.9 : 0.6,
-        }))
+        // Extract user preferences
+        const profile = preferences.profile_adjustments || {}
+        const weights = preferences.weights || {
+          Comfort: 0.40,
+          Health: 0.35,
+          Usability: 0.25,
+        }
 
-        // Sort by score (descending)
+        console.log('[Mock API] Evaluating with preferences:', {
+          weights,
+          profile,
+        })
+
+        // Score each room using user's preferences
+        const scoredRooms = roomsData.map((room) => {
+          const comfortScore = calculateComfortScore(room, profile)
+          const healthScore = calculateHealthScore(room, profile)
+          const usabilityScore = calculateUsabilityScore(room)
+
+          // Calculate weighted final score using user's weights
+          const finalScore =
+            comfortScore * weights.Comfort +
+            healthScore * weights.Health +
+            usabilityScore * weights.Usability
+
+          return {
+            ...room,
+            comfort_score: comfortScore,
+            health_score: healthScore,
+            usability_score: usabilityScore,
+            final_score: finalScore,
+          }
+        })
+
+        // Sort by final score (descending)
         const ranked = scoredRooms
           .sort((a, b) => b.final_score - a.final_score)
           .map((room, index) => ({
@@ -83,20 +206,21 @@ export const mockApi = {
             co2: room.co2,
             humidity: room.humidity,
             air_quality: room.air_quality,
+            voc: room.voc,
+            noise: room.noise,
+            light: room.light,
             seating_capacity: room.seating_capacity,
             has_projector: room.has_projector,
             computers: room.computers,
             has_robots: room.has_robots,
           }))
 
+        console.log('[Mock API] Top 3 ranked rooms:', ranked.slice(0, 3))
+
         resolve({
           rankings: ranked,
-          weights: {
-            Comfort: 0.40,
-            Health: 0.35,
-            Usability: 0.25,
-          },
-          consistency_ratio: 0.05,
+          weights: weights,
+          consistency_ratio: preferences.consistencyRatio || 0.05,
           is_consistent: true,
         })
       }, 500) // Simulate network delay
