@@ -1,12 +1,12 @@
 # Implementation Summary - IoT Room Selection Backend
 
-**Date:** December 22, 2024
+**Date:** December 22, 2025
 **Developer:** Stassart Anthony
-**Status:** ✅ Core Implementation Complete
+**Status:** Core Implementation Complete
 
 ---
 
-## 🎯 What We Built
+## What We Built
 
 A **production-ready FastAPI backend** for the IoT Room Selection Decision Support System that:
 - Provides REST APIs for sensor data, room facilities, and calendar availability
@@ -337,7 +337,7 @@ These thresholds are used in `ranking_service.py` scoring functions.
 
 ---
 
-## 🎖️ Achievements Unlocked
+## Achievements Unlocked
 
 ✅ **Production-Quality Code** - Proper structure, error handling, logging
 ✅ **Auto-Generated Docs** - Swagger + ReDoc built-in
@@ -350,7 +350,7 @@ These thresholds are used in `ranking_service.py` scoring functions.
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - **Fede** - Will provide AHP algorithm
 - **Filip** - Frontend consumer of this API
@@ -373,8 +373,6 @@ If you encounter issues:
 
 ## 🎉 Conclusion
 
-You now have a **complete, production-ready backend** for your IoT project!
-
 **What works:**
 - ✅ All 12 API endpoints functional
 - ✅ MongoDB schema implemented
@@ -390,11 +388,3 @@ You now have a **complete, production-ready backend** for your IoT project!
 - (Optional) Add real Arduino sensors
 - (Optional) Add calendar sync
 - (Optional) Add JWT authentication
-
-**You're ready to demo this to your professor! 🚀**
-
----
-
-**Happy coding, and good luck with your project presentation!**
-
-*- Built with Claude Code on December 22, 2024*
