@@ -4,7 +4,7 @@
             "name": "Room_1",
             "facilities": {
                 "videoprojector": true,
-                "seating_capacity": 62,
+                "seating_capacity": 62
             }
         },
         {
@@ -28,7 +28,7 @@
             "name": "Room_4",
             "facilities": {
                 "videoprojector": false,
-                "seating_capacity": 12,
+                "seating_capacity": 12
             }
         },
         {
