@@ -903,5 +903,5 @@ dist/
 ---
 
 **Document Version:** 1.0
-**Last Updated:** 2024-12-20
+**Last Updated:** 2025-12-20
 **Author:** Filip Zekonja

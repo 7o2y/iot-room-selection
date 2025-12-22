@@ -441,10 +441,10 @@ After setup:
 
 **Contact:**
 - **Frontend:** Filip Zekonja
-- **Backend:** Anthony
-- **Algorithm:** Fede
+- **Backend:** Anthony Stassart
+- **Algorithm:** Fede Newton
 
 ---
 
-**Last Updated:** 2024-12-20
+**Last Updated:** 2025-12-20
 **Version:** 1.0
