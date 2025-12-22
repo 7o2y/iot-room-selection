@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-12-01",
+  "lastUpdated": "2025-12-22",
   "tasks": [
     {
       "id": 1,
@@ -8,7 +8,8 @@
       "epic": "Architecture",
       "start": 1,
       "duration": 0.5,
-      "status": "todo"
+      "status": "done",
+      "notes": "Researched and documented I2C, Serial/UART, MQTT, HTTP/REST protocols with justifications"
     },
     {
       "id": 2,
@@ -17,7 +18,8 @@
       "epic": "Architecture",
       "start": 1.5,
       "duration": 0.5,
-      "status": "todo"
+      "status": "done",
+      "notes": "Created comprehensive IOT_COMMUNICATION_PROTOCOLS.md (912 lines) covering all 5 protocols with EU standards"
     },
     {
       "id": 3,
@@ -26,7 +28,8 @@
       "epic": "Database",
       "start": 2,
       "duration": 0.5,
-      "status": "todo"
+      "status": "done",
+      "notes": "Designed 3 collections (sensor_readings, rooms, calendar_events) with optimized indexes - documented in MONGODB_SCHEMA.md"
     },
     {
       "id": 4,
@@ -35,7 +38,8 @@
       "epic": "Database",
       "start": 2.5,
       "duration": 0.5,
-      "status": "todo"
+      "status": "done",
+      "notes": "MongoDB 7.0 running in Docker with all indexes created automatically via Motor driver"
     },
     {
       "id": 5,
@@ -44,7 +48,8 @@
       "epic": "Database",
       "start": 3,
       "duration": 1,
-      "status": "todo"
+      "status": "done",
+      "notes": "Created import script handling 252,000+ sensor readings across 6 sensor types for 5 rooms"
     },
     {
       "id": 6,
@@ -53,7 +58,8 @@
       "epic": "REST APIs",
       "start": 6,
       "duration": 0.25,
-      "status": "todo"
+      "status": "done",
+      "notes": "Complete FastAPI structure with routers, models, services, and async MongoDB integration"
     },
     {
       "id": 7,
@@ -62,7 +68,8 @@
       "epic": "REST APIs",
       "start": 6.25,
       "duration": 0.5,
-      "status": "todo"
+      "status": "done",
+      "notes": "3 endpoints: GET readings, GET stats, GET latest - all tested and working"
     },
     {
       "id": 8,
@@ -71,7 +78,8 @@
       "epic": "REST APIs",
       "start": 6.75,
       "duration": 0.5,
-      "status": "todo"
+      "status": "done",
+      "notes": "6 endpoints: list rooms, get room, facilities, events, availability checks - all functional"
     },
     {
       "id": 9,
@@ -80,7 +88,8 @@
       "epic": "REST APIs",
       "start": 7.25,
       "duration": 0.5,
-      "status": "todo"
+      "status": "done",
+      "notes": "POST /rank endpoint with AHP ranking service - tested successfully with multi-criteria scoring"
     },
     {
       "id": 10,
@@ -89,7 +98,8 @@
       "epic": "REST APIs",
       "start": 7.75,
       "duration": 0.5,
-      "status": "todo"
+      "status": "done",
+      "notes": "Auto-generated Swagger UI at /docs and ReDoc at /redoc with comprehensive examples"
     },
     {
       "id": 11,
@@ -98,7 +108,8 @@
       "epic": "Integration",
       "start": 8.5,
       "duration": 0.5,
-      "status": "todo"
+      "status": "done",
+      "notes": "21 integration tests covering all endpoints - all passing with pytest"
     },
     {
       "id": 12,
@@ -107,7 +118,8 @@
       "epic": "Documentation",
       "start": 9,
       "duration": 0.5,
-      "status": "todo"
+      "status": "done",
+      "notes": "Created 4 comprehensive docs: QUICKSTART_GUIDE.md, MONGODB_SCHEMA.md, IOT_COMMUNICATION_PROTOCOLS.md, IMPLEMENTATION_SUMMARY.md"
     },
     {
       "id": 13,
