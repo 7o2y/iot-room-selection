@@ -4,7 +4,7 @@
     {
       "id": 1,
       "name": "Research IoT Protocols",
-      "person": "Person A",
+      "person": "Anthony",
       "epic": "Architecture",
       "start": 1,
       "duration": 0.5,
@@ -14,7 +14,7 @@
     {
       "id": 2,
       "name": "Document Comm A, B, C, D",
-      "person": "Person A",
+      "person": "Anthony",
       "epic": "Architecture",
       "start": 1.5,
       "duration": 0.5,
@@ -24,7 +24,7 @@
     {
       "id": 3,
       "name": "Design MongoDB Schema",
-      "person": "Person A",
+      "person": "Anthony",
       "epic": "Database",
       "start": 2,
       "duration": 0.5,
@@ -34,7 +34,7 @@
     {
       "id": 4,
       "name": "Set up MongoDB",
-      "person": "Person A",
+      "person": "Anthony",
       "epic": "Database",
       "start": 2.5,
       "duration": 0.5,
@@ -44,7 +44,7 @@
     {
       "id": 5,
       "name": "Import Mock Sensor Data",
-      "person": "Person A",
+      "person": "Anthony",
       "epic": "Database",
       "start": 3,
       "duration": 1,
@@ -54,7 +54,7 @@
     {
       "id": 6,
       "name": "Set up FastAPI Project",
-      "person": "Person A",
+      "person": "Anthony",
       "epic": "REST APIs",
       "start": 6,
       "duration": 0.25,
@@ -64,7 +64,7 @@
     {
       "id": 7,
       "name": "Sensor Data Endpoints",
-      "person": "Person A",
+      "person": "Anthony",
       "epic": "REST APIs",
       "start": 6.25,
       "duration": 0.5,
@@ -74,7 +74,7 @@
     {
       "id": 8,
       "name": "Facilities & Calendar Endpoints",
-      "person": "Person A",
+      "person": "Anthony",
       "epic": "REST APIs",
       "start": 6.75,
       "duration": 0.5,
@@ -84,7 +84,7 @@
     {
       "id": 9,
       "name": "Decision/Rank Endpoint",
-      "person": "Person A",
+      "person": "Anthony",
       "epic": "REST APIs",
       "start": 7.25,
       "duration": 0.5,
@@ -94,7 +94,7 @@
     {
       "id": 10,
       "name": "Swagger Documentation",
-      "person": "Person A",
+      "person": "Anthony",
       "epic": "REST APIs",
       "start": 7.75,
       "duration": 0.5,
@@ -104,7 +104,7 @@
     {
       "id": 11,
       "name": "Integration Testing",
-      "person": "Person A",
+      "person": "Anthony",
       "epic": "Integration",
       "start": 8.5,
       "duration": 0.5,
@@ -114,7 +114,7 @@
     {
       "id": 12,
       "name": "Architecture Documentation",
-      "person": "Person A",
+      "person": "Anthony",
       "epic": "Documentation",
       "start": 9,
       "duration": 0.5,
@@ -124,7 +124,7 @@
     {
       "id": 13,
       "name": "Research EU Air Quality Standards",
-      "person": "Person B",
+      "person": "Fede",
       "epic": "Criteria",
       "start": 1,
       "duration": 0.5,
@@ -133,7 +133,7 @@
     {
       "id": 14,
       "name": "Define Comfort Thresholds",
-      "person": "Person B",
+      "person": "Fede",
       "epic": "Criteria",
       "start": 1.5,
       "duration": 0.5,
@@ -142,7 +142,7 @@
     {
       "id": 15,
       "name": "Create Criteria Hierarchy",
-      "person": "Person B",
+      "person": "Fede",
       "epic": "Criteria",
       "start": 2,
       "duration": 0.5,
@@ -151,7 +151,7 @@
     {
       "id": 16,
       "name": "Document Mapping Functions",
-      "person": "Person B",
+      "person": "Fede",
       "epic": "Criteria",
       "start": 2.5,
       "duration": 0.5,
@@ -160,7 +160,7 @@
     {
       "id": 17,
       "name": "Implement Saaty Pairwise Matrix",
-      "person": "Person B",
+      "person": "Fede",
       "epic": "AHP Algorithm",
       "start": 3,
       "duration": 0.5,
@@ -169,7 +169,7 @@
     {
       "id": 18,
       "name": "Eigenvector Weight Calculation",
-      "person": "Person B",
+      "person": "Fede",
       "epic": "AHP Algorithm",
       "start": 3.5,
       "duration": 0.5,
@@ -178,7 +178,7 @@
     {
       "id": 19,
       "name": "Consistency Ratio Check",
-      "person": "Person B",
+      "person": "Fede",
       "epic": "AHP Algorithm",
       "start": 6,
       "duration": 0.5,
@@ -187,7 +187,7 @@
     {
       "id": 20,
       "name": "Data to Score Mapping",
-      "person": "Person B",
+      "person": "Fede",
       "epic": "AHP Algorithm",
       "start": 6.5,
       "duration": 0.5,
@@ -196,7 +196,7 @@
     {
       "id": 21,
       "name": "Final Score Aggregation",
-      "person": "Person B",
+      "person": "Fede",
       "epic": "AHP Algorithm",
       "start": 7,
       "duration": 0.5,
@@ -205,7 +205,7 @@
     {
       "id": 22,
       "name": "Unit Tests for AHP",
-      "person": "Person B",
+      "person": "Fede",
       "epic": "AHP Algorithm",
       "start": 7.5,
       "duration": 0.5,
@@ -214,7 +214,7 @@
     {
       "id": 23,
       "name": "Bug Fixes & Refinements",
-      "person": "Person B",
+      "person": "Fede",
       "epic": "Integration",
       "start": 8.5,
       "duration": 0.5,
@@ -223,7 +223,7 @@
     {
       "id": 24,
       "name": "Algorithm Documentation",
-      "person": "Person B",
+      "person": "Fede",
       "epic": "Documentation",
       "start": 9,
       "duration": 0.5,
@@ -232,110 +232,110 @@
     {
       "id": 25,
       "name": "Set up React Project",
-      "person": "Person C",
+      "person": "Filip",
       "epic": "UI1 - End User",
       "start": 1,
       "duration": 0.5,
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": 26,
       "name": "Design UI Mockups",
-      "person": "Person C",
+      "person": "Filip",
       "epic": "UI1 - End User",
       "start": 1.5,
       "duration": 0.5,
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": 27,
       "name": "Saaty Scale Sliders",
-      "person": "Person C",
+      "person": "Filip",
       "epic": "UI1 - End User",
       "start": 2,
       "duration": 0.5,
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": 28,
       "name": "Profile Adjustment UI",
-      "person": "Person C",
+      "person": "Filip",
       "epic": "UI1 - End User",
       "start": 2.5,
       "duration": 0.5,
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": 29,
       "name": "Room Ranking Display",
-      "person": "Person C",
+      "person": "Filip",
       "epic": "UI1 - End User",
       "start": 6,
       "duration": 0.5,
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": 30,
       "name": "Integrate with FastAPI",
-      "person": "Person C",
+      "person": "Filip",
       "epic": "UI1 - End User",
       "start": 6.5,
       "duration": 0.5,
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": 31,
       "name": "Swagger Documentation Tab",
-      "person": "Person C",
+      "person": "Filip",
       "epic": "UI1 - End User",
       "start": 7,
       "duration": 0.25,
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": 32,
       "name": "Set up Grafana Dashboard",
-      "person": "Person C",
+      "person": "Filip",
       "epic": "UI2 - Admin",
       "start": 7.25,
       "duration": 0.5,
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": 33,
       "name": "Sensor Data Panels",
-      "person": "Person C",
+      "person": "Filip",
       "epic": "UI2 - Admin",
       "start": 7.75,
       "duration": 0.5,
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": 34,
       "name": "Facilities & Calendar Views",
-      "person": "Person C",
+      "person": "Filip",
       "epic": "UI2 - Admin",
       "start": 8.25,
       "duration": 0.5,
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": 35,
       "name": "Disconnection Alerts",
-      "person": "Person C",
+      "person": "Filip",
       "epic": "UI2 - Admin",
       "start": 8.75,
       "duration": 0.5,
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": 36,
       "name": "UI/UX Documentation",
-      "person": "Person C",
+      "person": "Filip",
       "epic": "Documentation",
       "start": 9.25,
       "duration": 0.5,
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": 37,

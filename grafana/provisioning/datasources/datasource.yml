@@ -1,0 +1,63 @@
+# Grafana Data Source Provisioning
+# This file automatically configures data sources when Grafana starts
+
+apiVersion: 1
+
+# Delete existing data sources before adding new ones
+deleteDatasources:
+  - name: FastAPI
+    orgId: 1
+
+# Data sources to add
+datasources:
+  # FastAPI Backend Data Source
+  - name: FastAPI
+    type: infinity
+    access: proxy
+    orgId: 1
+    uid: fastapi-datasource
+    isDefault: true
+    version: 1
+    editable: true
+
+    # JSON API configuration
+    jsonData:
+      url: http://host.docker.internal:8000
+      tlsSkipVerify: true
+
+    # Secure settings (if authentication is needed)
+    # secureJsonData:
+    #   apiKey: 'your-api-key-here'
+
+  # Alternative: JSON API Plugin (if using SimpleJson)
+  - name: IoT Rooms API
+    type: simplejson
+    access: proxy
+    url: http://host.docker.internal:8000/api/grafana
+    isDefault: false
+    version: 1
+    editable: true
+    jsonData:
+      tlsSkipVerify: true
+
+  # TestData DB (for testing/demo purposes)
+  - name: TestData DB
+    type: testdata
+    orgId: 1
+    uid: testdata
+    isDefault: false
+    version: 1
+    editable: false
+    jsonData:
+      scenarioId: random_walk
+
+# Note: If using MongoDB directly (requires MongoDB data source plugin)
+# - name: MongoDB
+#   type: grafana-mongodb-datasource
+#   access: proxy
+#   url: mongodb://host.docker.internal:27017
+#   database: iot_rooms
+#   jsonData:
+#     authType: credentials
+#   secureJsonData:
+#     password: 'your-mongodb-password'

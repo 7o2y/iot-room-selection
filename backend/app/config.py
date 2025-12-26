@@ -26,6 +26,7 @@ class Settings(BaseSettings):
     CORS_ORIGINS: list = [
         "http://localhost:3000",  # React dev server
         "http://localhost:5173",  # Vite dev server
+        "http://localhost:5175",  # Vite dev server (alternate port)
     ]
 
     # Optional: JWT Authentication (for bonus feature)
