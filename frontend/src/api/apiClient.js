@@ -14,6 +14,141 @@ const axiosInstance = axios.create({
   },
 })
 
+/**
+ * Convert frontend preferences format to backend format
+ * @param {Object} preferences - Frontend preferences
+ * @returns {Object} Backend-compatible request format
+ */
+const transformPreferencesToBackendFormat = (preferences) => {
+  const { weights = {}, profile_adjustments = {}, saaty_preferences = {} } = preferences
+
+  // Helper to convert weight to nearest Saaty scale value (1, 3, 5, 7, 9)
+  const toSaatyScale = (weight) => {
+    const saatyValues = [1, 3, 5, 7, 9]
+    // Convert 0-1 weight to 1-9 scale
+    const scaled = 1 + (weight * 8)
+    // Find nearest Saaty value
+    return saatyValues.reduce((prev, curr) =>
+      Math.abs(curr - scaled) < Math.abs(prev - scaled) ? curr : prev
+    )
+  }
+
+  // Map frontend's 3-tier hierarchy to backend's 6 criteria
+  // Comfort → temperature, humidity, sound
+  // Health → co2
+  // Usability → facilities, availability
+  const comfortWeight = weights.Comfort || weights.comfort || 0.40
+  const healthWeight = weights.Health || weights.health || 0.35
+  const usabilityWeight = weights.Usability || weights.usability || 0.25
+
+  const criteria_weights = {
+    temperature: toSaatyScale(comfortWeight * 0.35),
+    humidity: toSaatyScale(comfortWeight * 0.25),
+    sound: toSaatyScale(comfortWeight * 0.25),
+    co2: toSaatyScale(healthWeight),
+    facilities: toSaatyScale(usabilityWeight * 0.6),
+    availability: toSaatyScale(usabilityWeight * 0.4),
+  }
+
+  // Map profile adjustments to environmental preferences
+  const environmental_preferences = {}
+
+  if (profile_adjustments.temperature) {
+    environmental_preferences.temperature_min = profile_adjustments.temperature.min
+    environmental_preferences.temperature_max = profile_adjustments.temperature.max
+  }
+
+  if (profile_adjustments.co2) {
+    environmental_preferences.co2_max = profile_adjustments.co2.max
+  }
+
+  if (profile_adjustments.humidity) {
+    environmental_preferences.humidity_min = profile_adjustments.humidity.min
+    environmental_preferences.humidity_max = profile_adjustments.humidity.max
+  }
+
+  if (profile_adjustments.noise) {
+    environmental_preferences.sound_max = profile_adjustments.noise.max
+  }
+
+  return {
+    criteria_weights,
+    environmental_preferences: Object.keys(environmental_preferences).length > 0
+      ? environmental_preferences
+      : null,
+    facility_requirements: null, // Can be extended later
+    requested_time: null,
+    duration_minutes: null,
+  }
+}
+
+/**
+ * Convert backend response format to frontend format
+ * @param {Object} backendData - Backend response
+ * @param {Object} originalPreferences - Original frontend preferences for consistency ratio
+ * @returns {Object} Frontend-compatible response format
+ */
+const transformBackendResponseToFrontend = (backendData, originalPreferences = {}) => {
+  if (!backendData || !backendData.ranked_rooms) {
+    throw new Error('Invalid backend response format')
+  }
+
+  const rankings = backendData.ranked_rooms.map(room => {
+    const { criteria_scores = {}, current_conditions = {}, facilities = {} } = room
+
+    // Calculate category scores from individual criteria
+    const tempScore = criteria_scores.temperature || 0.8
+    const humidityScore = criteria_scores.humidity || 0.8
+    const soundScore = criteria_scores.sound || 0.8
+    const lightScore = 0.8 // Not in backend yet, use default
+
+    const co2Score = criteria_scores.co2 || 0.8
+    const vocScore = 0.8 // Not in backend yet, use default
+
+    const facilitiesScore = criteria_scores.facilities || 0.8
+    const availabilityScore = criteria_scores.availability || 1.0
+
+    // Calculate weighted category scores
+    const comfort_score = (tempScore + humidityScore + soundScore + lightScore) / 4
+    const health_score = (co2Score + vocScore) / 2
+    const usability_score = (facilitiesScore + availabilityScore) / 2
+
+    return {
+      rank: room.rank,
+      room_id: room.room_name,
+      room_name: room.room_name,
+      final_score: room.overall_score,
+      comfort_score,
+      health_score,
+      usability_score,
+      // Flatten current conditions
+      temperature: current_conditions.temperature,
+      co2: current_conditions.co2,
+      humidity: current_conditions.humidity,
+      air_quality: current_conditions.air_quality || null,
+      voc: current_conditions.voc,
+      noise: current_conditions.sound, // Rename sound → noise
+      light: current_conditions.light_intensity, // Rename light_intensity → light
+      // Flatten facilities
+      seating_capacity: facilities.seating_capacity,
+      has_projector: facilities.videoprojector, // Rename videoprojector → has_projector
+      computers: facilities.computers || 0,
+      has_robots: facilities.robots_for_training > 0 || false,
+    }
+  })
+
+  return {
+    rankings,
+    weights: {
+      Comfort: 0.40, // Default weights, could calculate from original preferences
+      Health: 0.35,
+      Usability: 0.25,
+    },
+    consistency_ratio: originalPreferences.consistencyRatio || 0.05,
+    is_consistent: true,
+  }
+}
+
 // Request interceptor - add authentication, logging, etc.
 axiosInstance.interceptors.request.use(
   (config) => {
@@ -95,11 +230,15 @@ const apiClient = {
     }
 
     try {
-      const response = await axiosInstance.get('/api/rooms')
-      return response.data
+      // Backend endpoint: GET /api/v1/rooms/?include_conditions=true
+      const response = await axiosInstance.get('/api/v1/rooms/', {
+        params: { include_conditions: true }
+      })
+      return response.data.rooms || response.data
     } catch (error) {
       console.error('[API Client] Error fetching rooms:', error)
       throw new Error(
+        error.response?.data?.detail ||
         error.response?.data?.message ||
         error.message ||
         'Failed to fetch rooms'
@@ -128,20 +267,35 @@ const apiClient = {
     }
 
     try {
-      const response = await axiosInstance.post('/api/evaluate', preferences)
+      // Transform frontend preferences to backend format
+      const backendRequest = transformPreferencesToBackendFormat(preferences)
+
+      console.log('[API Client] Transformed request:', backendRequest)
+
+      // Backend endpoint: POST /api/v1/rank
+      const response = await axiosInstance.post('/api/v1/rank', backendRequest)
+
+      // Transform backend response to frontend format
+      const frontendResponse = transformBackendResponseToFrontend(
+        response.data,
+        preferences
+      )
+
+      console.log('[API Client] Transformed response:', frontendResponse)
 
       // Validate response structure
-      if (!response.data || !response.data.rankings) {
+      if (!frontendResponse || !frontendResponse.rankings) {
         throw new Error('Invalid response format from server')
       }
 
-      return response.data
+      return frontendResponse
     } catch (error) {
       console.error('[API Client] Error evaluating rooms:', error)
 
       // Provide specific error messages
       if (error.response?.status === 400) {
         throw new Error(
+          error.response.data?.detail ||
           error.response.data?.message ||
           'Invalid preferences data. Please check your inputs.'
         )
@@ -153,33 +307,10 @@ const apiClient = {
       }
 
       throw new Error(
+        error.response?.data?.detail ||
         error.response?.data?.message ||
         error.message ||
         'Failed to evaluate rooms'
-      )
-    }
-  },
-
-  /**
-   * Get AHP criteria hierarchy and weights
-   * @returns {Promise<Object>} Criteria structure
-   * @throws {Error} If request fails
-   */
-  getCriteria: async () => {
-    if (USE_MOCK) {
-      console.log('[API Client] Using mock API for getCriteria')
-      return mockApi.getCriteria()
-    }
-
-    try {
-      const response = await axiosInstance.get('/api/criteria')
-      return response.data
-    } catch (error) {
-      console.error('[API Client] Error fetching criteria:', error)
-      throw new Error(
-        error.response?.data?.message ||
-        error.message ||
-        'Failed to fetch criteria'
       )
     }
   },
